@@ -1,15 +1,15 @@
-const loginBtn = document.getElementById('loginBtn')
+const registerBtn = document.getElementById('register');
 
-loginBtn.addEventListener('click', async () => {
+registerBtn.addEventListener('click', async () => {
     var password = document.getElementById('password').value
     var email = document.getElementById('email').value
 
     const user = {
         email: email,
-        password: password
+        password: password,
     }
 
-    const response = await fetch('http://localhost:5000/login', {
+    const response = await fetch('http://localhost:5000/register', {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
@@ -17,9 +17,8 @@ loginBtn.addEventListener('click', async () => {
         }
     })
     if (response.status == 200) {
-        localStorage.setItem('user', JSON.stringify(await response.json()));
-        location.href = 'homepage.html';
+        location.href = "login"
     } else {
-        alert('Wrong login');
+        alert('Register failed, try again')
     }
 })

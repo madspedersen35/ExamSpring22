@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <style>
         body {
@@ -15,17 +16,18 @@
     <title>Delete item</title>
 </head>
 </head>
-<h1> Delete item </h1> <style></style>
-<div>
-    <form action="/deleteitem?_method=DELETE" method="POST">
-    <body>
-        <div>
-            <label for="itemId"> Item ID:</label>
-            <input type="text" id="itemId" name="itemId" required>
-        </div>
-        <button id="deleteBtn" type="submit">Delete item</button>
-    </form>
+
+<body>
+    <h1> Delete item </h1>
+    <a href="homepage.html"> Homepage</a><br>
     <br>
-    <br>
+    <div>
+        <label for="itemId"> Item ID:</label>
+        <input type="text" id="itemId" name="itemId" required>
+    </div>
+    <button id="deleteBtn">Delete item</button>
+    <br><br>
+    <script src="deleteitem.js"> </script>
 </body>
+
 </html>

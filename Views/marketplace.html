@@ -18,14 +18,13 @@
 <div></div>
 
 <body>
-    <h1>Create item</h1>
+    <h1>Markedsplads</h1>
     <a href="homepage.html"> Homepage</a><br>
-    <a href="Updateitem.html"> Opdater vare</a><br>
-    <a href="deleteitem.html"> Slet vare</a><br>
     <br><br>
     <label for="kategori">Vælg en kategori:</label>
 
     <select name="kategori" id="kategori">
+        <option value="">Alle kategorier</option>
         <option value="1">Fiskeudstyr</option>
         <option value="2">Planter</option>
         <option value="3">Legetøj</option>
@@ -33,29 +32,12 @@
         <option value="5">Biler</option>
     </select>
     <br>
+    <button id="filterBtn">Filtre</button>
     <br>
-    <label for="originalpris"> Original Pris:</label>
-    <input type="number" id="originalpris" name="originalpris" required>
-    <br><br>
-    <label for="pris"> Pris:</label>
-    <input type="number" id="pris" name="pris" required>
-    <br><br>
-    <label for="vare">Titel:</label>
-    <input type="text" id="vare" name="vare" required>
-    <br><br>
-    <label for="picture">Billede link:</label>
-    <input type="text" id="picture" name="picture" required>
-    <br><br>
-    <label for="zip">Post nr:</label>
-    <input type="text" id="zip" name="zip" required>
-    <br><br>
-    <button id="submitVare">Opret vare</button>
-    <br><br>
-    <button id="visVare">Vis mine vare</button>
     <table id="itemList" class="list">
 
     </table>
-    <script src="createItem.js"> </script>
+    <script src="marketplace.js"> </script>
 </body>
 
 </html>

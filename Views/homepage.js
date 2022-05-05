@@ -1,34 +1,30 @@
 
 const logud = document.getElementById('logudBtn');
-const brugerEmail = document.getElementById("brugerEmail");
-const loginHref = document.getElementById("loginHref");
-const deleteuser = document.getElementById("deleteuser");
-const updateuseremail = document.getElementById("updateuseremail");
-const createitem = document.getElementById("createitem");
-const updateitem = document.getElementById("updateitem");
-const updatepassword = document.getElementById("updatepassword");
-const deleteitem = document.getElementById("deleteitem")
+const deleteUser = document.getElementById('deleteUser');
 
+document.addEventListener('DOMContentLoaded', () => {
 
-logud.addEventListener('click', function(){
-    loginHref.style.display = 'inline'
-    brugerEmail.textContent = 'Velkommen til: Ukendt bruger'
-    deleteuser.style.display = 'none';
-    updateuseremail.style.display = 'none';
-    createitem.style.display = 'none';
-    updateitem.style.display = 'none';
-    updatepassword.style.display = 'none';
-    deleteitem.style.display = 'none';
-    localStorage.clear()
-});
-
-function nameDisplay(){
-    if (localStorage.getItem('email')){
-        let email = localStorage.getItem('email');
-        brugerEmail.textContent = 'Velkommen til: ' + email;
-        loginHref.style.display = 'none';
-    } else {
-        brugerEmail.textContent = 'du er ikke logget ind';
+    if (!localStorage.getItem('user')) {
+        location.href = "login";
     }
-};
-document.body.onload = nameDisplay
+})
+
+logud.addEventListener('click', async () => {
+    localStorage.removeItem('user');
+    location.href = "login";
+})
+
+deleteUser.addEventListener('click', async () => {
+    const response = await fetch('http://localhost:5000/deleteUser/' + JSON.parse(localStorage.getItem('user')).id, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (response.status == 200) {
+        localStorage.removeItem('user');
+        location.href = "login";
+    } else {
+        alert('Delete failed');
+    }
+})

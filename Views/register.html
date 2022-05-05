@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,21 +15,21 @@
         padding-top: 7%;
     }
 </style>
+
 <body>
     <h1>Register</h1>
+    <br><br>
 
-    <form id="registerForm" action="/register" method="post">
-        <br><br>
+    <label for="email"> email</label>
+    <input type="email" id="email" name="email" required>
+    <br><br>
 
-        <label for="email"> email</label>
-        <input type="email" id="email" name="email" required>
-        <br><br>
-
-        <label for="password"> password</label>
-        <input type="password" id="password" name="password" required>
-            <br><br>
-        <button type="submit" id="register">Register</button>
-    </form>
+    <label for="password"> password</label>
+    <input type="password" id="password" name="password" required>
+    <br><br>
+    <button id="register">Register</button>
+    <script src="register.js"></script>
 </body>
 <a href="/login"> Login page</a>
+
 </html>

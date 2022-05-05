@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <style>
         body {
@@ -12,31 +13,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update user</title>
+    <title>Update item</title>
 </head>
+
 <body>
     <h1>Update item</h1>
-    <form action="/Updateitem?_method=PUT" method="POST">
+    <a href="homepage.html"> Homepage</a><br>
+    <br>
+    <label for="Item ID">Item ID:</label>
+    <input type="text" id="itemId" name="itemId">
+    <br><br>
+    <label for="kategori">Vælg en kategori:</label>
 
-        <label for="Item ID"> item ID:</label>
-        <input type="text" id="itemId" name="itemId">
-            <br><br>
-            <label for="kategori">Vælg en kategori:</label>
-        <select name="kategori" id="kategori">
-        <option value="Sport">sport og fritid</option>
-        <option value="Mode">Mode</option>
-        <option value="Bolig">Bolig</option>
-        <option value="Barn">Barn</option>
-        </select>
-        <br><br>
-        <label for="vare"> Din Vare:</label>
-        <input type="text" id="vare" name="vare" required>
-        <br><br>
-        <label for="pris"> Pris:</label>
-        <input type="number" id="pris" name="pris" required>
-        <br><br>
-        <button type="submit" id="submitVare">Opdater vare</button>
-        <br><br>
-        </form>
+    <select name="kategori" id="kategori">
+        <option value="1">Fiskeudstyr</option>
+        <option value="2">Planter</option>
+        <option value="3">Legetøj</option>
+        <option value="4">Udendørs</option>
+        <option value="5">Biler</option>
+    </select>
+    <br>
+    <br>
+    <label for="originalpris"> Original Pris:</label>
+    <input type="number" id="originalpris" name="originalpris" required>
+    <br><br>
+    <label for="pris"> Pris:</label>
+    <input type="number" id="pris" name="pris" required>
+    <br><br>
+    <label for="vare">Titel:</label>
+    <input type="text" id="vare" name="vare" required>
+    <br><br>
+    <label for="picture">Billede link:</label>
+    <input type="text" id="picture" name="picture" required>
+    <br><br>
+    <label for="zip">Post nr:</label>
+    <input type="text" id="zip" name="zip" required>
+    <br><br>
+    <button id="updateVare">Opdater vare</button>
+    <script src="updateitem.js"> </script>
 </body>
+
 </html>
