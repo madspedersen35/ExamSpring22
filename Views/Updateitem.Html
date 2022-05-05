@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0 auto;
+            max-width: 864px;
+            padding-left: 30%;
+            padding-top: 7%;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update user</title>
+</head>
+<body>
+    <h1>Update item</h1>
+    <form action="/Updateitem?_method=PUT" method="POST">
+
+        <label for="Item ID"> item ID:</label>
+        <input type="text" id="itemId" name="itemId">
+            <br><br>
+            <label for="kategori">Vælg en kategori:</label>
+        <select name="kategori" id="kategori">
+        <option value="Sport">sport og fritid</option>
+        <option value="Mode">Mode</option>
+        <option value="Bolig">Bolig</option>
+        <option value="Barn">Barn</option>
+        </select>
+        <br><br>
+        <label for="vare"> Din Vare:</label>
+        <input type="text" id="vare" name="vare" required>
+        <br><br>
+        <label for="pris"> Pris:</label>
+        <input type="number" id="pris" name="pris" required>
+        <br><br>
+        <button type="submit" id="submitVare">Opdater vare</button>
+        <br><br>
+        </form>
+</body>
+</html>

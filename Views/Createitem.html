@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create item</title>
+</head>
+<style>
+    body {
+        margin: 0 auto;
+        max-width: 864px;
+        padding-left: 30%;
+        padding-top: 7%;
+    }
+</style>
+<div></div>
+<body>
+    <h1>Create item</h1>
+    <a href="homepage.html"> Homepage</a><br>
+    <a href="deleteitem.html">Delete item</a>
+    <form id="itemForm" action="/Createitem" method="POST" enctype="multipart/form-data" >
+        <br><br>    
+        <label for="kategori">Vælg en kategori:</label>
+
+    <select name="kategori" id="kategori">
+  <option value="Sport">sport og fritid</option>
+  <option value="Mode">Mode</option>
+  <option value="Bolig">Bolig</option>
+  <option value="Barn">Barn</option>
+    </select>
+    <br>
+    <br>
+        <label for="email"> email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="pris"> Pris:</label>
+        <input type="number" id="pris" name="pris" required>
+        <br><br>
+
+        <label for="vare"> Din Vare:</label>
+        <input type="text" id="vare" name="vare" required>
+            <br><br>
+        <input ID="itemPic" type="file" name="itemPic"><br>
+        <br>
+        <button type="submit" id="submitVare">Opret vare</button>
+        <br><br>
+    </form>
+    <div>
+        <button type="submit" id="visVare">Vis mine vare</button>
+    <table id="itemList" class="list">
+
+    </table>
+    <script src="createItem.js"> </script>
+</body>
+</div>
+</html>
