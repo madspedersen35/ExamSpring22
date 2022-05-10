@@ -1,8 +1,31 @@
 const filterBtn = document.getElementById('filterBtn');
+const followBtn = document.getElementById('followBtn');
 const itemList = document.getElementById('itemList');
 
 document.addEventListener('DOMContentLoaded', async () => {
     getProducts();
+})
+
+followBtn.addEventListener('click', async () => {
+    const followItemId = document.getElementById('followItemId').value;
+
+    const follow = {
+        userId: JSON.parse(localStorage.getItem('user')).id,
+        itemId: followItemId
+    }
+
+    const response = await fetch('http://localhost:5000/followItem/', {
+        method: "POST",
+        body: JSON.stringify(follow),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (response.status == 200) {
+        alert("followed itemid " + followItemId)
+    } else {
+        alert('follow failed')
+    }
 })
 
 filterBtn.addEventListener('click', async () => {
@@ -34,6 +57,36 @@ async function getProducts() {
                 let categoryFilter = document.getElementById('kategori').value;
                 if (categoryFilter) {
                     if (item.category != categoryFilter) {
+                        passedFilter = false;
+                    }
+                }
+
+                let postnrFilter = document.getElementById('postnr').value;
+                if (postnrFilter) {
+                    if (item.zip != postnrFilter) {
+                        passedFilter = false;
+                    }
+                }
+
+                let origPriceFilter = document.getElementById('origPrice').value;
+                if (origPriceFilter) {
+                    if (item.originalPrice != origPriceFilter) {
+                        passedFilter = false;
+                    }
+                }
+
+                let priceFilter = document.getElementById('price').value;
+                if (priceFilter) {
+                    if (item.price != priceFilter) {
+                        passedFilter = false;
+                    }
+                }
+
+                let oppetidFilter = document.getElementById('oppetid').value;
+                if (oppetidFilter) {
+                    let compareDate = new Date();
+                    compareDate.setDate(compareDate.getDate() - oppetidFilter);
+                    if (new Date(item.createdAt) <= compareDate) {
                         passedFilter = false;
                     }
                 }

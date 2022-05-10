@@ -21,8 +21,12 @@
     <h1>Markedsplads</h1>
     <a href="homepage.html"> Homepage</a><br>
     <br><br>
+    <label for="followItemId">Item Id: </label>
+    <input type="text" id="followItemId" name="followItemId" required>
+    <button id="followBtn">Følg</button>
+    <br><br>
+    <h3>Filtrering:</h3>
     <label for="kategori">Vælg en kategori:</label>
-
     <select name="kategori" id="kategori">
         <option value="">Alle kategorier</option>
         <option value="1">Fiskeudstyr</option>
@@ -31,6 +35,18 @@
         <option value="4">Udendørs</option>
         <option value="5">Biler</option>
     </select>
+    <br>
+    <label for="postnr">Postnr:</label>
+    <input type="text" id="postnr" name="postnr">
+    <br>
+    <label for="origPrice">Original Pris:</label>
+    <input type="number" id="origPrice" name="origPrice">
+    <br>
+    <label for="price">Pris:</label>
+    <input type="number" id="price" name="price">
+    <br>
+    <label for="oppetid">Annonce oppetid (dage):</label>
+    <input type="number" id="oppetid" name="oppetid">
     <br>
     <button id="filterBtn">Filtre</button>
     <br>
