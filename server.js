@@ -22,14 +22,29 @@ var path = require("path");
 
 mssql.connect('Server=database-test-cbs.database.windows.net,1433;Database=ExamSpring2022;User Id=valdemar;Password=Valde0321;Encrypt=true')
 
-//delete user page
-app.get('/marketplace', (req, res) => {
-    res.sendFile(path.join(__dirname, '/Views/marketplace.html'))
+//admin delete user page
+app.get('/adminDeleteUser', (req, res) => {
+    res.sendFile(path.join(__dirname, '/Views/adminDeleteUser.html'))
 });
 
-//delete user page
-app.get('/Deleteuser', (req, res) => {
-    res.sendFile(path.join(__dirname, '/Views/Deleteuser.html'))
+//admin update user page
+app.get('/adminUpdateUser', (req, res) => {
+    res.sendFile(path.join(__dirname, '/Views/adminUpdateUser.html'))
+});
+
+//admin usage stats page
+app.get('/adminUsageStats', (req, res) => {
+    res.sendFile(path.join(__dirname, '/Views/adminUsageStats.html'))
+});
+
+//admin update user page
+app.get('/fulgteitems', (req, res) => {
+    res.sendFile(path.join(__dirname, '/Views/fulgteitems.html'))
+});
+
+//marketplace page
+app.get('/marketplace', (req, res) => {
+    res.sendFile(path.join(__dirname, '/Views/marketplace.html'))
 });
 
 
@@ -87,28 +102,22 @@ app.get('/Updateuser', (req, res) => {
     res.sendFile(path.join(__dirname, '/Views/Updateuser.html'))
 });
 
-//Updateuser Email funktionalitet
-app.put('/Updateuser', (req, res) => {
-    const userdata = fs.readFileSync('Database/users.json');
-    const allUsers = JSON.parse(userdata);
-
-    for (let i = 0; i < allUsers.length; i++) {
-
-        if (allUsers[i].email == req.body.oldemail && allUsers[i].password == req.body.oldpassword) {
-            allUsers[i].email = req.body.nyEmail
-            fs.writeFileSync('Database/users.json', JSON.stringify(allUsers, null, 4))
-            return res.redirect('/homepage')
-        }
-    }
-    return res.status(400).json({ message: 'Input didnt match try again' });
-});
-
 //update user password funktionalitet
 app.put('/UpdateuserPassword/:user', async (req, res) => {
     await mssql.query(`UPDATE Person SET password = '${req.body.password}' WHERE id = ` + req.params.user);
     res.status(200).send(req.body);
 });
 
+//update user funktionalitet
+app.put('/updateUser/:user', async (req, res) => {
+    let gold = 0;
+    if (req.body.gold) {
+        gold = 1;
+    }
+
+    await mssql.query(`UPDATE Person SET password = '${req.body.password}', golduser = ${gold} WHERE id = ` + req.params.user);
+    res.status(200).send(req.body);
+});
 
 //createitem get route
 app.get('/Createitem', (req, res) => {
@@ -117,8 +126,46 @@ app.get('/Createitem', (req, res) => {
 
 //show all items get route
 app.get('/items', async (req, res) => {
-    let result = await mssql.query(`SELECT * FROM Product`);
-    res.status(200).send(result.recordset);
+    let items = await mssql.query(`SELECT * FROM Product`);
+
+    //Sort gold items to be on top
+    let goldItems = [];
+    let nonGoldItems = [];
+    let goldusers = await mssql.query(`SELECT * FROM Person WHERE golduser = 1`);
+
+    //Loops over all items
+    for (let item of items.recordset) {
+
+        //Checks if item is gold item
+        let isGoldItem = false;
+        for (let user of goldusers.recordset) {
+            //If items person is same as current looped golduser, then set isGoldItem to true
+            if (item.person == user.id) {
+                isGoldItem = true;
+            }
+        }
+
+        //If item is golditem, add to goldItems array, else add to nonGoldItems
+        if (isGoldItem) {
+            goldItems.push(item);
+        } else {
+            nonGoldItems.push(item);
+        }
+    }
+
+    //Add all nonGoldItems to goldItems array to make them come last
+    for (let nonGoldItem of nonGoldItems) {
+        goldItems.push(nonGoldItem);
+    }
+
+    res.status(200).send(goldItems);
+});
+
+//show all followed items for user
+app.get('/followedItems/:user', async (req, res) => {
+    let items = await mssql.query(`SELECT Product.* FROM PersonProductFollow INNER JOIN Product ON PersonProductFollow.product = Product.id WHERE PersonProductFollow.person = ${req.params.user}`);
+
+    res.status(200).send(items.recordset);
 });
 
 //show all users items get route
@@ -127,23 +174,35 @@ app.get('/items/:user', async (req, res) => {
     res.status(200).send(result.recordset);
 });
 
+//brugsstatistikker
+app.get('/usageStats', async (req, res) => {
+    let persons = await mssql.query(`SELECT * FROM Person`);
+    let products = await mssql.query(`SELECT * FROM Product`);
+    for (let person of persons.recordset) {
+        //Initialize itemcount to 0
+        person.itemCount = 0;
+
+        //Loop over all products and +1 to itemcount if owner of product is same as current person in loop
+        for (let product of products.recordset) {
+            if (product.person == person.id) {
+                person.itemCount++;
+            }
+        }
+    }
+
+    res.status(200).send(persons.recordset);
+});
+
 //create item
 app.post('/Createitem', async (req, res) => {
     await mssql.query(`INSERT INTO Product (category, price, person, header, picture, zip, createdAt, originalPrice) VALUES('${req.body.category}', ${req.body.price}, ${req.body.person}, '${req.body.header}', '${req.body.picture}', '${req.body.zip}', '${new Date().toISOString()}', ${req.body.originalPrice})`);
     res.status(200).send(req.body);
 });
 
-//items indenfor en bestemt kategori
-app.get('/items/:kategori', (req, res) => {
-    const itemData = fs.readFileSync('Database/items.json');
-    const allItems = JSON.parse(itemData);
-    const category = allItems.find((c) => c.kategori === req.params.kategori);
-
-    if (!category) {
-        res.status(404).send('category does not exist')
-    } else {
-        return res.send(category)
-    }
+//follow item
+app.post('/followItem', async (req, res) => {
+    await mssql.query(`INSERT INTO PersonProductFollow (person, product) VALUES(${req.body.userId}, ${req.body.itemId})`);
+    res.status(200).send(req.body);
 });
 
 //delete item get route
