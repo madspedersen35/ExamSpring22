@@ -1,4 +1,4 @@
-const loginBtn = document.getElementById('deleteBtn')
+const deleteBtn = document.getElementById('deleteBtn')
 
 deleteBtn.addEventListener('click', async () => {
     let item = document.getElementById('itemId').value;

@@ -1,7 +1,6 @@
 const updateBtn = document.getElementById('updateBtn');
 
 updateBtn.addEventListener('click', async () => {
-    console.log("hallo");
     var nytPassword = document.getElementById('nyPassword').value
 
     const user = {
